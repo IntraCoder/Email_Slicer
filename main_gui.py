@@ -5,15 +5,18 @@ root.geometry("500x350")
 
 
 def url_slicer(url):
-    if not url:
+    if not url: # Check for Empty Input
         pass
     else:
         security = "No Info"
         if "http" in url:
+            # If user enters url with http part
             security = url.split(":/")[0]
             sliced_url = url.split("/")[2]
         else:
+            # If user enters url without http part
             sliced_url = url.split("/")[0]
+
         security_val.set(security)
         slice_url.set(sliced_url)
 
