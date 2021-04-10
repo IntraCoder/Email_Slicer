@@ -1,7 +1,7 @@
 def validity(domain, username):
     """ Function to check if Email is valid or not."""
     conditions = ("." in domain), (domain[0] != "."), (domain[-1] != "."), \
-                 (username != ''), ("." in username)
+                 (username != ''), ("." not in username)
 
     if all(conditions):
         return True
