@@ -22,8 +22,9 @@ if __name__ == '__main__':
     print('\033[1;35m--------------------------- Email Slicer ---------------------------')
     while 1:
         email = input("\033[1;;m>>> Enter Email here (Quit to exit program): ").strip()
-
-        if "@" not in email:
+        if email.lower() in ("q","quit","exit"):
+            quit()
+        elif "@" not in email:
             print("\033[1;31m [-] Invalid Email.")
         else:
             domain, username = slicer(email)
