@@ -22,7 +22,8 @@ if __name__ == '__main__':
     print('\033[1;35m--------------------------- Email Slicer ---------------------------')
     while 1:
         email = input("\033[1;;m>>> Enter Email here (Quit to exit program): ").strip()
-        if email.lower() in ("q","quit","exit"):
+        if email.lower() in ("q","quit","exit",""):
+            print("\033[1;35m [+] Thankyou for coming !")
             quit()
         elif "@" not in email:
             print("\033[1;31m [-] Invalid Email.")
