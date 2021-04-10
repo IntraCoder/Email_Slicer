@@ -1,40 +1,53 @@
 from tkinter import *
 
-root = Tk()
-root.geometry("500x350")
 
+def validity(domain, username):
+    conditions = ("." in domain), (domain[0] != "."), (domain[-1] != "."), \
+                 (username != ''), ("." not in username)
 
-def url_slicer(url):
-    if not url: # Check for Empty Input
-        pass
+    if any(conditions):
+        return True
     else:
-        security = "No Info"
-        if "http" in url:
-            # If user enters url with http part
-            security = url.split(":/")[0]
-            sliced_url = url.split("/")[2]
-        else:
-            # If user enters url without http part
-            sliced_url = url.split("/")[0]
-
-        security_val.set(security)
-        slice_url.set(sliced_url)
+        return False
 
 
-Label(root, text="Enter URL : ", font=("Bahnschrift Semilight Condensed", 22)).place(x=70, y=50)
-Label(root, text="Security : ", font=("Bahnschrift Semilight Condensed", 22)).place(x=70, y=120)
-Label(root, text="Sliced URL : ", font=("Bahnschrift Semilight Condensed", 22)).place(x=70, y=190)
+def slicer(mail):
+    domain = mail.split("@")[-1]
+    ind = mail.find(domain)
+    username = mail[:ind - 1]
 
-url_val = StringVar()
-slice_url = StringVar()
-security_val = StringVar()
+    if validity(domain, username):
+        domain_val.set(domain)
+        username_val.set(username)
+    else:
+        username_val.set("Invalid Email")
+        domain_val.set("Invalid Email")
 
-Entry(root, textvariable=url_val, font=("Bahnschrift Semilight Condensed", 18), width=25, bd=4).place(x=200, y=55)
-Entry(root, textvariable=security_val, font=("Bahnschrift Semilight Condensed", 18), width=25, bd=4).place(x=200, y=125)
-Entry(root, textvariable=slice_url, state="readonly", font=("Bahnschrift Semilight Condensed", 18),
-      width=25, bd=4).place(x=200, y=195)
 
-Button(root, text="Slice URL", font=("Bahnschrift Semilight Condensed", 20),
-       command=lambda: url_slicer(url_val.get())).place(x=190, y=260)
+if __name__ == '__main__':
+    root = Tk()
+    root.geometry("500x300")
+    root.config(bg="navy blue")
+    Label(root, text="Enter Email :", font=("Bahnschrift Semilight Condensed", 21),
+          bg="navy blue", fg="#ffee58").place(x=50, y=50)
+    Label(root, text="Domain :", font=("Bahnschrift Semilight Condensed", 21),
+          bg="navy blue", fg="#ffee58").place(x=50, y=120)
+    Label(root, text="Username :", font=("Bahnschrift Semilight Condensed", 21),
+          bg="navy blue", fg="#ffee58").place(x=50, y=190)
 
-root.mainloop()
+    mail_val = StringVar()
+    domain_val = StringVar()
+    username_val = StringVar()
+    Entry(root, textvariable=mail_val, font=("Bahnschrift Semilight Condensed", 18),
+          bd=4).place(x=190, y=50)
+    Entry(root, textvariable=domain_val, font=("Bahnschrift Semilight Condensed", 18),
+          state="readonly", bd=4).place(x=190, y=120)
+    Entry(root, textvariable=username_val, font=("Bahnschrift Semilight Condensed", 18),
+          state="readonly", bd=4).place(x=190, y=190)
+
+    Button(root, text="Slice Mail", font=("Bahnschrift Semilight Condensed", 19),
+           bg="#ffee58", fg="navy blue",
+           command=lambda: slicer(mail_val.get().strip())).place(x=200, y=240)
+
+    root.mainloop()
+    
